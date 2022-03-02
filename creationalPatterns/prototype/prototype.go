@@ -47,7 +47,7 @@ var bluePrototype *Shirt = &Shirt{
 	Color: BLUE,
 }
 
-func GetShirtsCloner(t int) ShirtCloner {
+func GetShirtsCloner() ShirtCloner {
 	return nil
 }
 
