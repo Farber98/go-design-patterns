@@ -1,1 +1,7 @@
 package prototype
+
+/*
+PROTOTYPE:
+
+EXAMPLE:
+*/
