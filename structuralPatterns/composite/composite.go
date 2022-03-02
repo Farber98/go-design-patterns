@@ -17,7 +17,7 @@ GOLANG:
 
 EXAMPLE: The swimmer and the fish.
 - We'll have and athlete and a swimmer.
-- We'll have an animal and a fish.
+- We'll have an animal and a shark.
 - The Swimmer and the Fish methods must share the code
 - The athlete mus train and the animal must eat.
 
@@ -25,7 +25,7 @@ ACCEPTANEC CRITERIA:
 - We must have an Athlete struct with Train method
 - We must have a Swimmer with Swim method
 - We must have an Animal struct with an Eat method
-- We must have a Fish struct with a swim method that is shared with the Swimmer, and not have inheritance or hierarchy issues.
+- We must have a shark struct with a swim method that is shared with the Swimmer, and not have inheritance or hierarchy issues.
 
 */
 
