@@ -2,6 +2,7 @@ package bridge
 
 import (
 	"errors"
+	"fmt"
 	"io"
 )
 
@@ -38,7 +39,8 @@ type PrinterImpl1 struct {
 }
 
 func (impl1 *PrinterImpl1) PrintMessage(msg string) error {
-	return errors.New("not implemented yet")
+	fmt.Printf("%s\n", msg)
+	return nil
 }
 
 type PrinterImpl2 struct {
@@ -46,22 +48,11 @@ type PrinterImpl2 struct {
 }
 
 func (impl2 *PrinterImpl2) PrintMessage(msg string) error {
-	return errors.New("not implemented yet")
-
-}
-
-type TestWriter struct {
-	Msg string
-}
-
-func (t *TestWriter) Write(p []byte) (n int, err error) {
-	n = len(p)
-	if n > 0 {
-		t.Msg = string(p)
-		return n, nil
+	if impl2.Writer == nil {
+		return errors.New("You need to pass an io.Writer to PrinterImpl2")
 	}
-	err = errors.New("content received on Writer was empty")
-	return
+	fmt.Fprintf(impl2.Writer, "%s", msg)
+	return nil
 }
 
 type PrinterAbstraction interface {
@@ -74,7 +65,8 @@ type NormalPrinter struct {
 }
 
 func (c *NormalPrinter) Print() error {
-	return errors.New("NotImplementedYet")
+	c.Printer.PrintMessage(c.Msg)
+	return nil
 }
 
 type PacktPrinter struct {
@@ -83,5 +75,6 @@ type PacktPrinter struct {
 }
 
 func (c *PacktPrinter) Print() error {
-	return errors.New("NotImplenetedYet")
+	c.Printer.PrintMessage(fmt.Sprintf("Message from Packt: %s", c.Msg))
+	return nil
 }
