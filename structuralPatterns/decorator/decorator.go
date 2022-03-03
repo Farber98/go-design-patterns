@@ -21,7 +21,7 @@ SITUATIONS:
 
 EXAMPLE: Prepare pizza.
 - The core is the pizza
-- The ingredientes are the decorating types.
+- The ingredientes are the decorating types..
 
 ACCEPTANCE CRITERIA: Have a common interface and a core type.
 - We must have the main interface that all decorators will implement. This interface will be called IngredientAdd, and it will have the AddIngredient method.
