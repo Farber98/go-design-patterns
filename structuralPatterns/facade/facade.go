@@ -1,0 +1,13 @@
+package facade
+
+/*
+FACADE:
+
+OBJECTIVE:
+
+SITUATIONS:
+
+EXAMPLE:
+
+ACCEPTANCE CRITERIA:
+*/
