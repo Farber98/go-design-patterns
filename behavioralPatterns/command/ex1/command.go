@@ -1,4 +1,4 @@
-package command
+package main
 
 import "fmt"
 
@@ -32,4 +32,36 @@ type ConsoleOutput struct {
 
 func (c *ConsoleOutput) Execute() {
 	fmt.Println(c.Message)
+}
+
+func CreateCommand(s string) Command {
+	fmt.Println("Creating command.")
+	return &ConsoleOutput{
+		Message: s,
+	}
+}
+
+type CommandeQueue struct {
+	Queue []Command
+}
+
+func (p *CommandeQueue) AddCommand(c Command) {
+	p.Queue = append(p.Queue, c)
+
+	if len(p.Queue) == 3 {
+		for _, command := range p.Queue {
+			command.Execute()
+		}
+	}
+	p.Queue = make([]Command, 3)
+}
+
+func main() {
+	queue := CommandeQueue{}
+
+	queue.AddCommand(CreateCommand("First message"))
+	queue.AddCommand(CreateCommand("Second message"))
+	queue.AddCommand(CreateCommand("Third message"))
+	queue.AddCommand(CreateCommand("Forth message"))
+	queue.AddCommand(CreateCommand("Fifth message"))
 }
