@@ -1,6 +1,7 @@
 package responsability
 
 import (
+	"fmt"
 	"strings"
 	"testing"
 )
@@ -39,4 +40,21 @@ func TestCreateDefaultChain(t *testing.T) {
 				t.Fatal("Last link didn't received expected message")
 			}
 		})
+	t.Run("2 loggers, second uses the closure implementation", func(t *testing.T) {
+		myWriter = myTestWriter{}
+		closureLogger := ClosureChain{
+			Closure: func(s string) {
+				fmt.Printf("My closure logger! Message: %s\n", s)
+				myWriter.receivedMessage = &s
+			},
+		}
+
+		WriterLogger.NextChain = &closureLogger
+
+		chain.Next("Hello closure logger")
+
+		if *myWriter.receivedMessage != "Hello closure logger" {
+			t.Fatal("Expected message wasn't received in myWriter")
+		}
+	})
 }
