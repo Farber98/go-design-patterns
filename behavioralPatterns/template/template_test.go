@@ -19,7 +19,20 @@ func TestTemplate_ExecuteAlgorithm(t *testing.T) {
 		res := s.ExecuteAlgorithm(s)
 		expectedOrError(res, " world ", t)
 	})
+	t.Run("Using anonymous functions adapted to an interface", func(t *testing.T) {
+		messageRetriever := MessageRetrieverAdapter(func() string {
+			return "world"
+		})
 
+		if messageRetriever == nil {
+			t.Fatal("Can not continue with a nil MessageRetriever")
+		}
+
+		template := TemplateImpl{}
+		res := template.ExecuteAlgorithm(messageRetriever)
+
+		expectedOrError(res, " world ", t)
+	})
 }
 
 func expectedOrError(res string, expected string, t *testing.T) {
