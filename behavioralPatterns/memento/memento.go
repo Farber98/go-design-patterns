@@ -1,6 +1,8 @@
 package memento
 
-import "fmt"
+import (
+	"errors"
+)
 
 /*
 MEMENTO:
@@ -38,11 +40,11 @@ type Originator struct {
 }
 
 func (o *Originator) NewMemento() Memento {
-	return Memento{}
+	return Memento{State: o.State}
 }
 
 func (o *Originator) ExtractAndStoreState(m Memento) {
-
+	o.State = m.State
 }
 
 type CareTaker struct {
@@ -50,9 +52,12 @@ type CareTaker struct {
 }
 
 func (c *CareTaker) Add(m Memento) {
-
+	c.MementoList = append(c.MementoList, m)
 }
 
 func (c *CareTaker) Memento(i int) (Memento, error) {
-	return Memento{}, fmt.Errorf("not implemented yet")
+	if len(c.MementoList) < i || i < 0 {
+		return Memento{}, errors.New("index not found")
+	}
+	return c.MementoList[i], nil
 }

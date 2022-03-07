@@ -28,11 +28,17 @@ func TestCareTaker_Memento(t *testing.T) {
 		t.Error("Unexpected state")
 	}
 	mem, err = CareTaker.Memento(-1)
-	if err != nil {
+	if err == nil {
 		t.Fatal("An error is expected when asking for a negative number but no error was found")
 	}
 }
 
 func TestOriginator_ExtractAndStoreState(t *testing.T) {
+	originator := Originator{State: State{"Idle"}}
+	idleMemento := originator.NewMemento()
 
+	originator.ExtractAndStoreState(idleMemento)
+	if originator.State.Description != "Idle" {
+		t.Error("Unexpected state found")
+	}
 }
