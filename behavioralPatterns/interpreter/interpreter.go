@@ -31,6 +31,21 @@ const (
 	DIV = "div"
 )
 
+type Interpreter interface {
+	Read() int
+}
+
+type Value int
+
+type OperationSum struct {
+	Left  Interpreter
+	Right Interpreter
+}
+
+func (v *Value) Read() int {
+	return int(*v)
+}
+
 type PolishNotationStack []int
 
 func (p *PolishNotationStack) Push(s int) {
