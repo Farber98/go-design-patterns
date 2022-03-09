@@ -26,7 +26,6 @@ ACCEPTANCE CRITERIA:
 - If the number of retries reaches zero and the number is still incorrect, the game finishes and the players has lost.
 - If the player guesses the number, the player wins.
 */
-
 type GameState interface {
 	ExecuteState(*GameContext) bool
 }
@@ -36,6 +35,22 @@ type GameContext struct {
 	Retries      int
 	Won          bool
 	Next         GameState
+}
+
+type WinState struct {
+}
+
+func (s *WinState) ExecuteState(c *GameContext) bool {
+	println("Congrats, you won")
+	return false
+}
+
+type LoseState struct {
+}
+
+func (s *LoseState) ExecuteState(c *GameContext) bool {
+	fmt.Printf("You lose. The correct number was: %d\n", c.SecretNumber)
+	return false
 }
 
 type StartState struct{}
@@ -71,11 +86,11 @@ type FinishState struct{}
 
 func (a *FinishState) ExecuteState(c *GameContext) bool {
 	if c.Won {
-		println("Congrats, you won")
+		c.Next = &WinState{}
 	} else {
-		println("F, you lose. Correct number was", c.SecretNumber)
+		c.Next = &LoseState{}
 	}
-	return false
+	return true
 }
 
 func main() {
